@@ -4,21 +4,10 @@
 
 <h2 align="center"> <a>⛓‍💥 Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models</a></h2>
 
+
 <p align="center">
-  <!-- Project Page Button -->
-  <a href="http://tianyu.lu.fm/dox/" target="_blank" style="
-    display: inline-block;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    background-color: #1e90ff;
-    border-radius: 8px;
-    text-decoration: none;
-    margin: 16px 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  ">
-    🚀 Visit Project Page
+  <a href="http://tianyu.lu.fm/dox/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀%20LAUNCH%20PROJECT-Doxing%20via%20the%20Lens-8b5cf6?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjZmZmZmZmIi8+Cjwvc3ZnPgo=&logoColor=white&labelColor=4c1d95&color=8b5cf6" alt="Visit Project Page" />
   </a>
 </p>
 
