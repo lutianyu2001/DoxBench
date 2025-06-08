@@ -15,7 +15,7 @@
   <a href="https://arxiv.org/abs/2504.19373">
   <img src="https://img.shields.io/badge/ArXiv-2504.19373-b31b1b.svg?style=flat-square&logo=arxiv" alt="arXiv">
 </a>
-  <a href="https://huggingface.co/datasets/tianyulu/DoxBench">
+  <a href="https://huggingface.co/datasets/DoxxingTeam/DoxBench">
   <img src="https://img.shields.io/badge/HuggingFace-Dataset-yellow.svg?style=flat-square&logo=huggingface" alt="Hugging Face">
 </a>
 
