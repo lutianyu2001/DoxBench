@@ -29,6 +29,7 @@
 </p>
 
 ## 💡 Abstract
+
 Recent advances in multi-modal large reasoning models (MLRMs) have shown significant ability to interpret complex visual content. While these models enable impressive reasoning capabilities, they also introduce novel and underexplored privacy risks. In this paper, we identify a novel category of privacy leakage in MLRMs: Adversaries can infer sensitive geolocation information, such as a user's home address or neighborhood, from user-generated images, including selfies captured in private settings. To formalize and evaluate these risks, we propose a three-level visual privacy risk framework that categorizes image content based on contextual sensitivity and potential for location inference. We further introduce DoxBench, a curated dataset of 500 real-world images reflecting diverse privacy scenarios. Our evaluation across 11 advanced MLRMs and MLLMs demonstrates that these models consistently outperform non-expert humans in geolocation inference and can effectively leak location-related private information. This significantly lowers the barrier for adversaries to obtain users' sensitive geolocation information. We further analyze and identify two primary factors contributing to this vulnerability: (1) MLRMs exhibit strong reasoning capabilities by leveraging visual clues in combination with their internal world knowledge; and (2) MLRMs frequently rely on privacy-related visual clues for inference without any built-in mechanisms to suppress or avoid such usage. To better understand and demonstrate real-world attack feasibility, we propose GeoMiner, a collaborative attack framework that decomposes the prediction process into two stages: clue extraction and reasoning to improve geolocation performance while introducing a novel attack perspective. Our findings highlight the urgent need to reassess inference-time privacy risks in MLRMs to better protect users' sensitive information.
 
 <p align="center">
@@ -46,24 +47,19 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
 - [Features](#features)
 - [Dataset](#dataset)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Core Framework](#core-framework)
-- [Examples](#examples)
-- [Output Formats](#output-formats)
-- [Advanced Features](#advanced-features)
-- [Performance](#performance)
+- [Main Experiment](#main-experiment)
+- [ClueMiner](#clueminer)
 - [License](#license)
 - [Citation](#citation)
 
 ## Features
 
-- **Comprehensive MLRM Evaluation**: Support for 11+ state-of-the-art multi-modal models
+- **Comprehensive MLRM Evaluation**: Support for 11+ multi-modal models
 - **Three-Level Privacy Framework**: Systematic categorization of visual privacy risks
 - **GeoMiner Attack Framework**: Novel collaborative attack methodology for enhanced geolocation inference
 - **Real-World Dataset**: 500 curated images reflecting diverse privacy scenarios
 - **Distance-Based Accuracy Metrics**: Precise evaluation using geospatial distance calculations
 - **Clue Mining Analysis**: Automated extraction and analysis of privacy-revealing visual elements
-- **Defense Mechanism Testing**: Built-in evaluation of privacy protection strategies
 - **Parallel Processing**: Multi-threaded evaluation for large-scale experiments
 - **Comprehensive Output**: Detailed results with reasoning traces and statistical analysis
 
@@ -142,152 +138,174 @@ GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 - **Meta Models**: `llama4-maverick`, `llama4-scout`
 - **Qwen Models**: `qvq-max`
 
-## Usage
+## Main Experiment
 
-### Main Experiment
+### Usage
 
 ```bash
-python app.py [-h] [-v] --input_csv INPUT_CSV --output_csv OUTPUT_CSV 
-              --model MODEL [--max_workers MAX_WORKERS]
-              [--cot_mode COT_MODE] [--geominer_detector_model DETECTOR_MODEL]
-              [--prompt_base_defense {on,off}] [--noise_std NOISE_STD]
-              [--verbose] [--custom_prompt CUSTOM_PROMPT]
+python experiment.py INPUT_CSV [OPTIONS]
 ```
 
-#### Core Arguments
+### Required Arguments
+- `INPUT_CSV`: Path to input dataset CSV file (e.g., `dataset/result.csv`)
 
-- `--input_csv` **[Required]**
-    - Input dataset file in CSV format
-    - Must contain image paths and ground truth location data
-- `--output_csv` **[Required]**
-    - Output file path for evaluation results
-- `--model` **[Required]**
-    - Target MLRM for evaluation
-    - Options: `gpt4o`, `sonnet4`, `gemini`, `qwen2.5vl`, etc.
+### Core Options
 
-#### Processing Arguments
+#### Model Selection
+- `--model MODEL`: Select AI model
+  - Available: `o3`, `o4mini`, `gpt4o`, `gpt4.1`, `gpt4.1-mini`, `sonnet4`, `opus4`, `gemini`, `qwen2.5vl`, `llama4-maverick`, `llama4-scout`, `qvq`, `qvq-max`, `llama-guard4`
+- `--geominer_detector_model MODEL`: GeoMiner Detector model (OpenAI-compatible models only, default: `gpt4o`)
 
-- `--max_workers` (default: 3)
-    - Number of parallel workers for API requests
-- `--batch_size` (default: 5)
-    - Batch size for processing images
-- `--cot_mode` (default: "standard")
-    - Chain-of-thought reasoning mode
-    - Options: `standard`, `geominer`
+#### Output Configuration
+- `-o, --output OUTPUT_DIR`: Output directory (default: `results/`)
 
-#### Advanced Arguments
+#### Candidate Addresses
+- `--top1`: Request Top-1 address candidate (default)
+- `--top3`: Request Top-3 address candidates
 
-- `--geominer_detector_model`
-    - Detector model for GeoMiner framework
-    - Enhances clue extraction capabilities
-- `--prompt_base_defense` (default: "off")
-    - Enable prompt-based privacy defense mechanisms
-- `--noise_std` (default: 0.0)
-    - Standard deviation for Gaussian noise injection
-- `--verbose`
-    - Enable detailed logging and progress tracking
+#### Chain of Thought (CoT)
+- `--cot MODE`: CoT mode
+  - `on`: Standard chain of thought (default)
+  - `off`: No chain of thought
+  - `workflow`: GeoMiner workflow mode
 
-#### Examples
+#### Processing Options
+- `-p, --parallel NUM`: Number of parallel threads (default: 1)
+- `-m, --max-tasks NUM`: Maximum number of tasks to process
+- `-r, --random-sample NUM`: Random sample size
+- `-s, --random-seed SEED`: Random seed for reproducible results
 
-##### Basic Evaluation
+#### Resume & Debugging
+- `--breakpoint ID`: Resume from specific output CSV ID
 
+#### Advanced Features
+- `--reasoning_summary MODE`: Reasoning process recording
+  - `off`: Disabled (default)
+  - `plain`: Basic reasoning capture
+  - `with_llm_judge`: LLM-based reasoning analysis
+  - `with_llm_judge-MODEL`: Use specific model as judge
+- `--prompt-based-defense MODE`: Privacy defense mechanism (`on`/`off`)
+- `--noise STD`: Apply Gaussian noise preprocessing (0.1-1.0)
+
+### Examples
+
+#### Basic Usage
 ```bash
 # Basic evaluation with GPT-4o
-python app.py --input_csv your_dataset.csv --output_csv results.csv --model gpt4o
+python experiment.py dataset/result.csv --model gpt4o
 
-# Advanced evaluation with multiple models
-python app.py --input_csv your_dataset.csv --output_csv results.csv \
-    --model gemini --max_workers 3 --batch_size 5
-
-# Using GeoMiner framework
-python app.py --input_csv your_dataset.csv --output_csv results.csv \
-    --model gpt4o --cot_mode geominer --geominer_detector_model gpt4.1-mini
+# Test with Claude Sonnet 4, Top-3 addresses, CoT enabled
+python experiment.py dataset/result.csv \
+    --model sonnet4 \
+    --top3 \
+    --cot on \
+    --parallel 4
 ```
 
-#### Advanced Configuration
-
-##### Defense Mechanisms
+#### Advanced Usage
 ```bash
-# Enable prompt-based defense
-python app.py --input_csv your_dataset.csv --prompt_base_defense on
+# GeoMiner workflow mode
+python experiment.py dataset/result.csv \
+    --model gpt4o \
+    --top3 \
+    --cot workflow \
+    --geominer_detector_model gpt4.1-mini \
+    --parallel 4
 
-# Add Gaussian noise to images
-python app.py --input_csv your_dataset.csv --noise_std 0.1
+# With defense mechanisms
+python experiment.py dataset/result.csv \
+    --model o3 \
+    --top1 \
+    --cot off \
+    --prompt-based-defense on \
+    --parallel 4
+
+# With Gaussian noise preprocessing
+python experiment.py dataset/result.csv \
+    --model gpt4o \
+    --top1 \
+    --cot off \
+    --noise 0.3 \
+    --parallel 4
 ```
 
-##### Parallel Processing
+#### Resume from Breakpoint
 ```bash
-# Process with multiple workers
-python app.py --input_csv your_dataset.csv --max_workers 5 --batch_size 10
+# Resume from specific ID in output CSV
+python experiment.py dataset/result.csv \
+    --model qvq-max \
+    --top3 \
+    --cot on \
+    --breakpoint 286
 ```
 
-#### Output
-
-The evaluation generates comprehensive results including:
-
-- **Geolocation Predictions**: Predicted addresses and coordinates
-- **Distance Accuracy**: Calculated distances between predicted and actual locations
-- **Privacy Risk Assessment**: Categorized by our three-level framework
-- **Token Usage Statistics**: API consumption tracking
-- **Clue Analysis**: Extracted visual and contextual clues
-
-##### Sample Output Structure
-```csv
-id,image_id,classification,people,selfie,address,geoid,latitude,longitude,country,region,metropolitan,guessed_address,guessed_geoid,guessed_lat,guessed_lon,guessed_country,guessed_region,guessed_metropolitan,country_correct,region_correct,metropolitan_correct,tract_correct,block_correct,error_distance_km,api_call_time,clue_list,address_list,answer,prompt
+#### Sampling and Testing
+```bash
+# Random sampling for quick testing
+python experiment.py dataset/result.csv \
+    --model gpt4o \
+    --top3 \
+    --cot on \
+    --parallel 4 \
+    --max-tasks 8 \
+    --random-sample 100 \
+    --random-seed 42
 ```
 
-### Clue Mining Analysis
+### Output Files
 
-Use the enhanced clue mining tool to analyze privacy leakage patterns.
+Results are automatically saved to timestamped files in the `results/` directory:
+- Format: `test492-cot_{MODE}-top{N}-{MODEL}-{TIMESTAMP}.csv`
+- Includes: geolocation predictions, accuracy metrics, reasoning traces, token usage
+
+#### Output CSV Columns
+- **Basic Info**: `id`, `image_id`, `classification`, `people`, `selfie`
+- **Ground Truth**: `address`, `geoid`, `latitude`, `longitude`, `country`, `region`, `metropolitan`
+- **Predictions**: `guessed_address`, `guessed_geoid`, `guessed_lat`, `guessed_lon`, `guessed_country`, `guessed_region`, `guessed_metropolitan`
+- **Accuracy**: `country_correct`, `region_correct`, `metropolitan_correct`, `tract_correct`, `block_correct`, `error_distance_km`
+- **Process Data**: `api_call_time`, `clue_list`, `address_list`, `answer`, `prompt`
+- **Advanced**: `reasoning_process`, `extract_and_analyze` (if reasoning enabled)
+
+## ClueMiner
+
+The `clueminer.py` tool provides an advanced LLM-powered framework for building privacy clue taxonomies.
+
+### Usage
 
 ```bash
-python app.py [-h] [-v] --input_csv INPUT_CSV --output_csv OUTPUT_CSV 
-              --model MODEL [--max_workers MAX_WORKERS] [--batch_size BATCH_SIZE]
-              [--cot_mode COT_MODE] [--geominer_detector_model DETECTOR_MODEL]
-              [--prompt_base_defense {on,off}] [--noise_std NOISE_STD]
-              [--verbose] [--custom_prompt CUSTOM_PROMPT]
+python clueminer.py [OPTIONS]
 ```
 
-#### Core Arguments
+### Key Options
+- `--input-csv PATH`: Input CSV file with clue data
+- `--model MODEL`: OpenAI model for analysis (default: `o4-mini-2025-04-16`)
+- `--output-dir DIR`: Output directory (default: `phase1_output`)
+- `--breakpoint PATH`: Resume from specific JSON file
 
-- `--input_csv` **[Required]**
-    - Input dataset file in CSV format
-    - Must contain image paths and ground truth location data
-- `--output_csv` **[Required]**
-    - Output file path for evaluation results
-- `--model` **[Required]**
-    - Target MLRM for evaluation
-    - Options: `gpt4o`, `sonnet4`, `gemini`, `qwen2.5vl`, etc.
-
-#### Processing Arguments
-
-- `--max_workers` (default: 3)
-    - Number of parallel workers for API requests
-- `--batch_size` (default: 5)
-    - Batch size for processing images
-- `--cot_mode` (default: "standard")
-    - Chain-of-thought reasoning mode
-    - Options: `standard`, `geominer`
-
-#### Advanced Arguments
-
-- `--geominer_detector_model`
-    - Detector model for GeoMiner framework
-    - Enhances clue extraction capabilities
-- `--prompt_base_defense` (default: "off")
-    - Enable prompt-based privacy defense mechanisms
-- `--noise_std` (default: 0.0)
-    - Standard deviation for Gaussian noise injection
-- `--verbose`
-    - Enable detailed logging and progress tracking
-
-#### Examples
+### Example
 ```bash
-# Run clue mining analysis
-python clueminer.py --input_file results/your_results.csv --max_iterations 10 --model o4-mini-2025-04-16
+# Basic category mining
+python clueminer.py \
+    --input-csv results/your_results.csv \
+    --model o4-mini-2025-04-16
 
-# Resume from a specific iteration
-python clueminer.py --input_file results/your_results.csv --breakpoint_file output/phase1_categories_iteration_5.json
+# Resume from breakpoint
+python clueminer.py \
+    --input-csv results/your_results.csv \
+    --breakpoint output/phase1_categories_iteration_5.json
+```
+
+### Output Structure
+```
+output/
+├── {input_filename}_{timestamp}/
+│   ├── final_categories.json          # Final category taxonomy
+│   ├── output/                        # Individual round results
+│   │   ├── phase1-output-round1-id_1-imageid_243.json
+│   │   └── ...
+│   └── input/                         # Prompt/response logs
+│       ├── phase1-input-round1-id_1-imageid_243.json
+│       └── ...
 ```
 
 ## License
