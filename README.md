@@ -30,7 +30,10 @@
 
 ## 💡 Abstract
 Recent advances in multi-modal large reasoning models (MLRMs) have shown significant ability to interpret complex visual content. While these models enable impressive reasoning capabilities, they also introduce novel and underexplored privacy risks. In this paper, we identify a novel category of privacy leakage in MLRMs: Adversaries can infer sensitive geolocation information, such as a user's home address or neighborhood, from user-generated images, including selfies captured in private settings. To formalize and evaluate these risks, we propose a three-level visual privacy risk framework that categorizes image content based on contextual sensitivity and potential for location inference. We further introduce DoxBench, a curated dataset of 500 real-world images reflecting diverse privacy scenarios. Our evaluation across 11 advanced MLRMs and MLLMs demonstrates that these models consistently outperform non-expert humans in geolocation inference and can effectively leak location-related private information. This significantly lowers the barrier for adversaries to obtain users' sensitive geolocation information. We further analyze and identify two primary factors contributing to this vulnerability: (1) MLRMs exhibit strong reasoning capabilities by leveraging visual clues in combination with their internal world knowledge; and (2) MLRMs frequently rely on privacy-related visual clues for inference without any built-in mechanisms to suppress or avoid such usage. To better understand and demonstrate real-world attack feasibility, we propose GeoMiner, a collaborative attack framework that decomposes the prediction process into two stages: clue extraction and reasoning to improve geolocation performance while introducing a novel attack perspective. Our findings highlight the urgent need to reassess inference-time privacy risks in MLRMs to better protect users' sensitive information.
-<img src="./misc/framework.png" width="1000"/>
+
+<p align="center">
+    <img src="./misc/framework.png" width="1000"/>
+<p>
 
 ## 👻 Let's invite the Doxxing Team
 
@@ -41,7 +44,7 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
 ## Table of Contents
 
 - [Features](#features)
-- [Prerequisites](#prerequisites)
+- [Dataset](#dataset)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Core Framework](#core-framework)
@@ -65,12 +68,51 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
 - **Parallel Processing**: Multi-threaded evaluation for large-scale experiments
 - **Comprehensive Output**: Detailed results with reasoning traces and statistical analysis
 
-## Prerequisites
+## Dataset
 
-- Python ≥3.8
-- Valid API keys for supported model providers
-- Google Maps API key (for geocoding and distance calculations)
-- Sufficient computational resources for model inference
+### Data Instances
+
+The dataset is organized as follows:
+- **Image Folders**: Separate folders containing privacy-sanitized images (EXIF removed from image files)
+- **EXIF Metadata**: Comprehensive metadata in `exif.csv` including GPS coordinates and camera settings
+- **Ground Truth Labels**: Location information in `result.csv` with Google Geocoding API-derived addresses
+
+### Data Fields
+
+#### Image Files
+- High-resolution photographs (EXIF metadata stripped for privacy)
+- Organized in folders by privacy level (L1, Mirror)
+- Original filename preserved for cross-referencing
+
+#### exif.csv
+Contains comprehensive EXIF metadata for all images including:
+- `SourceFile`: Original filename for cross-referencing
+- `GPSLatitude`, `GPSLongitude`: GPS coordinates for evaluation
+- `GPSPosition`: Combined GPS position information
+- `Make`, `Model`: Camera device information (iPhone devices)
+- `CreateDate`, `DateTimeOriginal`: Temporal metadata
+- `ImageHeight`, `ImageWidth`: Image dimensions
+- `ISO`, `Aperture`, `ExposureTime`: Camera settings
+- 200+ additional EXIF fields for comprehensive metadata analysis
+
+#### result.csv
+Ground truth geolocation data:
+- `filename`: Image filename for cross-referencing
+- `address`: Human-readable address (via Google Geocoding API)
+- `latitude`: GPS latitude coordinate
+- `longitude`: GPS longitude coordinate
+
+### Data Splits
+
+Currently available categories:
+- **Level 1 (L1)**: in `benign_people` folder, ~126 images (25.2% of total dataset) - Personal imagery in public settings
+- **Mirror**: in `mirror` folder, ~46 images (9.2% of total dataset) - Location inference through reflective surfaces
+
+**Note**: Level 2 and Level 3 image folders will be released in future versions following additional ethics review.
+
+<p align="center">
+    <img src="./misc/dataset_sunburst.png" width="300"/>
+<p>
 
 ## Installation
 
@@ -195,7 +237,6 @@ The evaluation generates comprehensive results including:
 id,image_id,classification,people,selfie,address,geoid,latitude,longitude,country,region,metropolitan,guessed_address,guessed_geoid,guessed_lat,guessed_lon,guessed_country,guessed_region,guessed_metropolitan,country_correct,region_correct,metropolitan_correct,tract_correct,block_correct,error_distance_km,api_call_time,clue_list,address_list,answer,prompt
 ```
 
-
 ### Clue Mining Analysis
 
 Use the enhanced clue mining tool to analyze privacy leakage patterns.
@@ -250,17 +291,19 @@ python clueminer.py --input_file results/your_results.csv --max_iterations 10 --
 python clueminer.py --input_file results/your_results.csv --breakpoint_file output/phase1_categories_iteration_5.json
 ```
 
-
 ## Citation
 
 If you use DoxBench in your research, please cite our paper:
 
 ```bibtex
-@article{luo2024doxing,
-  title={Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models},
-  author={Luo, Weidi and Lu, Tianyu and Zhang, Qiming and Liu, Xiaogeng and Hu, Bin and Zhao, Yue and Zhao, Jieyu and Gao, Song and McDaniel, Patrick and Xiang, Zhen and Xiao, Chaowei},
-  journal={arXiv preprint arXiv:2504.19373},
-  year={2024}
+@misc{luo2025doxinglensrevealingprivacy,
+      title={Doxing via the Lens: Revealing Privacy Leakage in Image Geolocation for Agentic Multi-Modal Large Reasoning Model}, 
+      author={Weidi Luo and Qiming Zhang and Tianyu Lu and Xiaogeng Liu and Yue Zhao and Zhen Xiang and Chaowei Xiao},
+      year={2025},
+      eprint={2504.19373},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR},
+      url={https://arxiv.org/abs/2504.19373}, 
 }
 ```
 
