@@ -189,7 +189,7 @@ python experiment.py INPUT_CSV [OPTIONS]
 
 ### Examples
 
-#### Basic Usage
+#### Preliminary Experiments
 ```bash
 # Basic evaluation with GPT-4o
 python experiment.py dataset/result.csv --model gpt4o
@@ -202,7 +202,7 @@ python experiment.py dataset/result.csv \
     --parallel 4
 ```
 
-#### Advanced Usage
+#### Follow-up Experiments
 ```bash
 # GeoMiner workflow mode
 python experiment.py dataset/result.csv \
@@ -329,11 +329,3 @@ If you use DoxBench in your research, please cite our paper:
 ```
 
 For more detailed documentation and examples, please refer to our [paper](https://arxiv.org/abs/2504.19373) and [dataset](https://huggingface.co/datasets/tianyulu/DoxBench).
-
----
-
-**⚠️ Important Notes:**
-- This tool is designed for research purposes to understand privacy risks in MLRMs
-- Please use responsibly and in accordance with ethical guidelines
-- Ensure you have proper permissions for any images you analyze
-- Be mindful of API costs when running large-scale evaluations
