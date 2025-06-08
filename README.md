@@ -153,7 +153,7 @@ python experiment.py INPUT_CSV [OPTIONS]
 
 #### Model Selection
 - `--model MODEL`: Select AI model
-  - Available: `o3`, `o4mini`, `gpt4o`, `gpt4.1`, `gpt4.1-mini`, `sonnet4`, `opus4`, `gemini`, `qwen2.5vl`, `llama4-maverick`, `llama4-scout`, `qvq`, `qvq-max`, `llama-guard4`
+  - Available: `o3`, `o4mini`, `gpt4o`, `gpt4.1`, `gpt4.1-mini`, `sonnet4`, `opus4`, `gemini`, `qwen2.5vl`, `llama4-maverick`, `llama4-scout`, `qvq-max`, `llama-guard4`
 - `--geominer_detector_model MODEL`: GeoMiner Detector model (OpenAI-compatible models only, default: `gpt4o`)
 
 #### Output Configuration
@@ -209,7 +209,7 @@ python experiment.py dataset/result.csv \
     --model gpt4o \
     --top3 \
     --cot workflow \
-    --geominer_detector_model gpt4.1-mini \
+    --geominer_detector_model gpt4o\
     --parallel 4
 
 # With defense mechanisms
@@ -248,8 +248,7 @@ python experiment.py dataset/result.csv \
     --cot on \
     --parallel 4 \
     --max-tasks 8 \
-    --random-sample 100 \
-    --random-seed 42
+    --random-sample 100
 ```
 
 ### Output Files
