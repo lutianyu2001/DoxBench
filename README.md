@@ -38,13 +38,11 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
   <img src="./misc/doxing_team.png" width="500" alt="team-1">
 </p>
 
-### 1. Environment Configuration
-
-#### Option A: Using Conda (Recommended)
+### 1. Environment Configuration using Conda
 ```bash
 # Clone the repository
 git clone https://github.com/lutianyu2001/DoxBench.git
-cd DoxBench
+cd ./DoxBench/code/experiment
 
 # Create conda environment from environment.yml
 conda env create -f environment.yml
@@ -53,23 +51,9 @@ conda env create -f environment.yml
 conda activate gps-address
 ```
 
-#### Option B: Using pip
-```bash
-# Clone the repository
-git clone https://github.com/lutianyu2001/DoxBench.git
-cd DoxBench
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt  # You may need to create this from environment.yml
-```
-
 ### 2. API Keys Configuration
 
-Create a `.env` file in the project root directory and add your API keys:
+Create a `.env` file in the `./DoxBench/code/experiment` directory and add your API keys:
 
 ```bash
 # OpenAI API Keys
@@ -88,27 +72,7 @@ DASHSCOPE_API_KEY=your_dashscope_api_key_here
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 ```
 
-### 3. Dataset Preparation
-
-Download the DoxBench dataset from [HuggingFace](https://huggingface.co/datasets/tianyulu/DoxBench):
-
-```bash
-# Option 1: Using git-lfs
-git lfs clone https://huggingface.co/datasets/tianyulu/DoxBench
-
-# Option 2: Download manually and place in your data directory
-# Ensure your CSV file has columns: image_path, real_address, real_lat, real_lon
-```
-
-### 4. Running the Evaluation
-
-#### Web Interface (Streamlit)
-```bash
-# Launch the interactive web interface
-streamlit run app.py
-
-# Open your browser and navigate to http://localhost:8501
-```
+### 3. Running the Evaluation
 
 #### Command Line Interface
 ```bash
@@ -137,12 +101,10 @@ Use the enhanced clue mining tool to analyze privacy leakage patterns:
 
 ```bash
 # Run clue mining analysis
-python clueminer.py --input_file results/your_results.csv \
-    --max_iterations 10 --model o4-mini-2025-04-16
+python clueminer.py --input_file results/your_results.csv --max_iterations 10 --model o4-mini-2025-04-16
 
 # Resume from a specific iteration
-python clueminer.py --input_file results/your_results.csv \
-    --breakpoint_file output/phase1_categories_iteration_5.json
+python clueminer.py --input_file results/your_results.csv --breakpoint_file output/phase1_categories_iteration_5.json
 ```
 
 ### 6. Understanding the Output
