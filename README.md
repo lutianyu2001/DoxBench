@@ -3,6 +3,25 @@
 <p>
 
 <h2 align="center"> <a>⛓‍💥 Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models</a></h2>
+
+<p align="center">
+  <!-- Project Page Button -->
+  <a href="http://tianyu.lu.fm/dox/" target="_blank" style="
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #1e90ff;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 16px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  ">
+    🚀 Visit Project Page
+  </a>
+</p>
+
 <h5 align="center"> If you like our project, please give us a star ⭐ on GitHub for latest update.  </h2>
 
 <h5 align="center">
