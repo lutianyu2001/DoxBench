@@ -38,43 +38,118 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
   <img src="./misc/doxing_team.png" width="500" alt="team-1">
 </p>
 
-### 1. Environment Configuration using Conda
+## Table of Contents
+
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Core Framework](#core-framework)
+- [Examples](#examples)
+- [Output Formats](#output-formats)
+- [Advanced Features](#advanced-features)
+- [Performance](#performance)
+- [Dataset](#dataset)
+- [Citation](#citation)
+- [License](#license)
+
+## Features
+
+- **Comprehensive MLRM Evaluation**: Support for 11+ state-of-the-art multi-modal models
+- **Three-Level Privacy Framework**: Systematic categorization of visual privacy risks
+- **GeoMiner Attack Framework**: Novel collaborative attack methodology for enhanced geolocation inference
+- **Real-World Dataset**: 500 curated images reflecting diverse privacy scenarios
+- **Distance-Based Accuracy Metrics**: Precise evaluation using geospatial distance calculations
+- **Clue Mining Analysis**: Automated extraction and analysis of privacy-revealing visual elements
+- **Defense Mechanism Testing**: Built-in evaluation of privacy protection strategies
+- **Parallel Processing**: Multi-threaded evaluation for large-scale experiments
+- **Comprehensive Output**: Detailed results with reasoning traces and statistical analysis
+
+## Prerequisites
+
+- Python ≥3.8
+- Valid API keys for supported model providers
+- Google Maps API key (for geocoding and distance calculations)
+- Sufficient computational resources for model inference
+
+## Installation
+
 ```bash
-# Clone the repository
 git clone https://github.com/lutianyu2001/DoxBench.git
 cd ./DoxBench/code/experiment
-
-# Create conda environment from environment.yml
 conda env create -f environment.yml
-
-# Activate the environment
 conda activate gps-address
 ```
 
-### 2. API Keys Configuration
+### API Keys Configuration
 
-Create a `.env` file in the `./DoxBench/code/experiment` directory and add your API keys:
+Create a `.env` file in the experiment directory:
 
 ```bash
-# OpenAI API Keys
+# Required API Keys
 OPENAI_API_KEY=your_openai_api_key_here
-
-# OpenRouter API Key (for Gemini, Qwen, Llama models)
 OPENROUTER_API_KEY=your_openrouter_api_key_here
-
-# Anthropic API Key (for Claude models)
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
-
-# Dashscope API Key (for QVQ models)
 DASHSCOPE_API_KEY=your_dashscope_api_key_here
-
-# Google Maps API Key (for geocoding)
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 ```
 
-### 3. Running the Evaluation
+#### Supported Models
+- **OpenAI Models**: `o3`, `o4mini`, `gpt4o`, `gpt4.1`, `gpt4.1-mini`
+- **Anthropic Models**: `sonnet4`, `opus4`
+- **Google Models**: `Gemini-2.5Pro`
+- **Meta Models**: `llama4-maverick`, `llama4-scout`
+- **Alibaba Models**: `qwen2.5vl`, `qvq`, `qvq-max`
 
-#### Command Line Interface
+## Usage
+
+### Main Experiment
+
+```bash
+python app.py [-h] [-v] --input_csv INPUT_CSV --output_csv OUTPUT_CSV 
+              --model MODEL [--max_workers MAX_WORKERS] [--batch_size BATCH_SIZE]
+              [--cot_mode COT_MODE] [--geominer_detector_model DETECTOR_MODEL]
+              [--prompt_base_defense {on,off}] [--noise_std NOISE_STD]
+              [--verbose] [--custom_prompt CUSTOM_PROMPT]
+```
+
+#### Core Arguments
+
+- `--input_csv` **[Required]**
+    - Input dataset file in CSV format
+    - Must contain image paths and ground truth location data
+- `--output_csv` **[Required]**
+    - Output file path for evaluation results
+- `--model` **[Required]**
+    - Target MLRM for evaluation
+    - Options: `gpt4o`, `sonnet4`, `gemini`, `qwen2.5vl`, etc.
+
+#### Processing Arguments
+
+- `--max_workers` (default: 3)
+    - Number of parallel workers for API requests
+- `--batch_size` (default: 5)
+    - Batch size for processing images
+- `--cot_mode` (default: "standard")
+    - Chain-of-thought reasoning mode
+    - Options: `standard`, `geominer`
+
+#### Advanced Arguments
+
+- `--geominer_detector_model`
+    - Detector model for GeoMiner framework
+    - Enhances clue extraction capabilities
+- `--prompt_base_defense` (default: "off")
+    - Enable prompt-based privacy defense mechanisms
+- `--noise_std` (default: 0.0)
+    - Standard deviation for Gaussian noise injection
+- `--verbose`
+    - Enable detailed logging and progress tracking
+
+#### Examples
+
+##### Basic Evaluation
+
 ```bash
 # Basic evaluation with GPT-4o
 python app.py --input_csv your_dataset.csv --output_csv results.csv --model gpt4o
@@ -88,26 +163,30 @@ python app.py --input_csv your_dataset.csv --output_csv results.csv \
     --model gpt4o --cot_mode geominer --geominer_detector_model gpt4.1-mini
 ```
 
-#### Available Models
-- **OpenAI Models**: `o3`, `o4mini`, `gpt4o`, `gpt4.1`, `gpt4.1-mini`
-- **Anthropic Models**: `sonnet4`, `opus4`
-- **Google Models**: `Gemini-2.5Pro`
-- **Meta Models**: `llama4-maverick`, `llama4-scout`
-- **Alibaba Models**: `qwen2.5vl`, `qvq`, `qvq-max`
+#### Advanced Configuration
 
-### 5. Clue Mining Analysis
-
-Use the enhanced clue mining tool to analyze privacy leakage patterns:
-
+##### Defense Mechanisms
 ```bash
-# Run clue mining analysis
-python clueminer.py --input_file results/your_results.csv --max_iterations 10 --model o4-mini-2025-04-16
+# Enable prompt-based defense
+python app.py --input_csv your_dataset.csv --prompt_base_defense on
 
-# Resume from a specific iteration
-python clueminer.py --input_file results/your_results.csv --breakpoint_file output/phase1_categories_iteration_5.json
+# Add Gaussian noise to images
+python app.py --input_csv your_dataset.csv --noise_std 0.1
 ```
 
-### 6. Understanding the Output
+##### Parallel Processing
+```bash
+# Process with multiple workers
+python app.py --input_csv your_dataset.csv --max_workers 5 --batch_size 10
+```
+
+##### Custom Prompts
+```bash
+# Use custom evaluation prompts
+python app.py --input_csv your_dataset.csv --custom_prompt "Your custom prompt here"
+```
+
+#### Output
 
 The evaluation generates comprehensive results including:
 
@@ -117,35 +196,67 @@ The evaluation generates comprehensive results including:
 - **Token Usage Statistics**: API consumption tracking
 - **Clue Analysis**: Extracted visual and contextual clues
 
-#### Sample Output Structure
+##### Sample Output Structure
 ```csv
 image_path,real_address,real_lat,real_lon,predicted_address,predicted_lat,predicted_lon,distance_km,accuracy_level,clues_extracted,reasoning_trace
 ```
 
-### 7. Advanced Configuration
 
-#### Defense Mechanisms
+### Clue Mining Analysis
+
+Use the enhanced clue mining tool to analyze privacy leakage patterns.
+
 ```bash
-# Enable prompt-based defense
-python app.py --input_csv your_dataset.csv --prompt_base_defense on
-
-# Add Gaussian noise to images
-python app.py --input_csv your_dataset.csv --noise_std 0.1
+python app.py [-h] [-v] --input_csv INPUT_CSV --output_csv OUTPUT_CSV 
+              --model MODEL [--max_workers MAX_WORKERS] [--batch_size BATCH_SIZE]
+              [--cot_mode COT_MODE] [--geominer_detector_model DETECTOR_MODEL]
+              [--prompt_base_defense {on,off}] [--noise_std NOISE_STD]
+              [--verbose] [--custom_prompt CUSTOM_PROMPT]
 ```
 
-#### Parallel Processing
+#### Core Arguments
+
+- `--input_csv` **[Required]**
+    - Input dataset file in CSV format
+    - Must contain image paths and ground truth location data
+- `--output_csv` **[Required]**
+    - Output file path for evaluation results
+- `--model` **[Required]**
+    - Target MLRM for evaluation
+    - Options: `gpt4o`, `sonnet4`, `gemini`, `qwen2.5vl`, etc.
+
+#### Processing Arguments
+
+- `--max_workers` (default: 3)
+    - Number of parallel workers for API requests
+- `--batch_size` (default: 5)
+    - Batch size for processing images
+- `--cot_mode` (default: "standard")
+    - Chain-of-thought reasoning mode
+    - Options: `standard`, `geominer`
+
+#### Advanced Arguments
+
+- `--geominer_detector_model`
+    - Detector model for GeoMiner framework
+    - Enhances clue extraction capabilities
+- `--prompt_base_defense` (default: "off")
+    - Enable prompt-based privacy defense mechanisms
+- `--noise_std` (default: 0.0)
+    - Standard deviation for Gaussian noise injection
+- `--verbose`
+    - Enable detailed logging and progress tracking
+
+#### Examples
 ```bash
-# Process with multiple workers
-python app.py --input_csv your_dataset.csv --max_workers 5 --batch_size 10
+# Run clue mining analysis
+python clueminer.py --input_file results/your_results.csv --max_iterations 10 --model o4-mini-2025-04-16
+
+# Resume from a specific iteration
+python clueminer.py --input_file results/your_results.csv --breakpoint_file output/phase1_categories_iteration_5.json
 ```
 
-#### Custom Prompts
-```bash
-# Use custom evaluation prompts
-python app.py --input_csv your_dataset.csv --custom_prompt "Your custom prompt here"
-```
-
-### 8. Troubleshooting
+## Troubleshooting
 
 #### Common Issues:
 1. **API Rate Limits**: Reduce `max_workers` and increase `batch_size`
@@ -162,7 +273,7 @@ python app.py --input_csv your_dataset.csv --verbose
 python -c "from app import GeoLocationTester; tester = GeoLocationTester(); tester.test_dashscope_connection()"
 ```
 
-### 9. Citation
+## Citation
 
 If you use DoxBench in your research, please cite our paper:
 
