@@ -52,9 +52,8 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
 - [Output Formats](#output-formats)
 - [Advanced Features](#advanced-features)
 - [Performance](#performance)
-- [Dataset](#dataset)
-- [Citation](#citation)
 - [License](#license)
+- [Citation](#citation)
 
 ## Features
 
@@ -290,6 +289,11 @@ python clueminer.py --input_file results/your_results.csv --max_iterations 10 --
 # Resume from a specific iteration
 python clueminer.py --input_file results/your_results.csv --breakpoint_file output/phase1_categories_iteration_5.json
 ```
+
+## License
+
+- **Code**: This project's code is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file
+- **Dataset**: The datasets are licensed under Creative Commons Attribution NonCommercial NoDerivatives 4.0 International - see [LICENSE-DATA](dataset/LICENSE-DATA)
 
 ## Citation
 
