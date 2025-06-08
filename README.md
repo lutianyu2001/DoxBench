@@ -95,11 +95,11 @@ GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 ```
 
 #### Supported Models
-- **OpenAI Models**: `o3`, `o4mini`, `gpt4o`, `gpt4.1`, `gpt4.1-mini`
+- **OpenAI Models**: `o3`, `o4mini`, `gpt4o`, `gpt4.1`
 - **Anthropic Models**: `sonnet4`, `opus4`
 - **Google Models**: `Gemini-2.5Pro`
 - **Meta Models**: `llama4-maverick`, `llama4-scout`
-- **Alibaba Models**: `qwen2.5vl`, `qvq`, `qvq-max`
+- **Qwen Models**: `qvq-max`
 
 ## Usage
 
@@ -107,7 +107,7 @@ GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 
 ```bash
 python app.py [-h] [-v] --input_csv INPUT_CSV --output_csv OUTPUT_CSV 
-              --model MODEL [--max_workers MAX_WORKERS] [--batch_size BATCH_SIZE]
+              --model MODEL [--max_workers MAX_WORKERS]
               [--cot_mode COT_MODE] [--geominer_detector_model DETECTOR_MODEL]
               [--prompt_base_defense {on,off}] [--noise_std NOISE_STD]
               [--verbose] [--custom_prompt CUSTOM_PROMPT]
@@ -180,12 +180,6 @@ python app.py --input_csv your_dataset.csv --noise_std 0.1
 python app.py --input_csv your_dataset.csv --max_workers 5 --batch_size 10
 ```
 
-##### Custom Prompts
-```bash
-# Use custom evaluation prompts
-python app.py --input_csv your_dataset.csv --custom_prompt "Your custom prompt here"
-```
-
 #### Output
 
 The evaluation generates comprehensive results including:
@@ -198,7 +192,7 @@ The evaluation generates comprehensive results including:
 
 ##### Sample Output Structure
 ```csv
-image_path,real_address,real_lat,real_lon,predicted_address,predicted_lat,predicted_lon,distance_km,accuracy_level,clues_extracted,reasoning_trace
+id,image_id,classification,people,selfie,address,geoid,latitude,longitude,country,region,metropolitan,guessed_address,guessed_geoid,guessed_lat,guessed_lon,guessed_country,guessed_region,guessed_metropolitan,country_correct,region_correct,metropolitan_correct,tract_correct,block_correct,error_distance_km,api_call_time,clue_list,address_list,answer,prompt
 ```
 
 
@@ -256,22 +250,6 @@ python clueminer.py --input_file results/your_results.csv --max_iterations 10 --
 python clueminer.py --input_file results/your_results.csv --breakpoint_file output/phase1_categories_iteration_5.json
 ```
 
-## Troubleshooting
-
-#### Common Issues:
-1. **API Rate Limits**: Reduce `max_workers` and increase `batch_size`
-2. **Memory Issues**: Process smaller batches or use lighter models
-3. **Geocoding Errors**: Ensure Google Maps API key is valid and has sufficient quota
-4. **Model Availability**: Check API key permissions and model access
-
-#### Debug Mode:
-```bash
-# Enable verbose logging
-python app.py --input_csv your_dataset.csv --verbose
-
-# Test API connections
-python -c "from app import GeoLocationTester; tester = GeoLocationTester(); tester.test_dashscope_connection()"
-```
 
 ## Citation
 
