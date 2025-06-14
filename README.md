@@ -213,17 +213,9 @@ python experiment.py dataset/result.csv \
     --parallel 4
 ```
 
-#### Follow-up Experiments
+#### Defense Experiments
 ```bash
-# GeoMiner workflow mode
-python experiment.py dataset/result.csv \
-    --model gpt4o \
-    --top3 \
-    --cot workflow \
-    --geominer_detector_model gpt4o\
-    --parallel 4
-
-# With defense mechanisms
+# With prompt-based defense
 python experiment.py dataset/result.csv \
     --model o3 \
     --top1 \
@@ -278,7 +270,7 @@ Results are automatically saved to timestamped files in the `results/` directory
 - **Advanced**: `reasoning_process`, `extract_and_analyze` (if reasoning enabled)
 
 ## GeoMiner
-use --cot workflow to invoke GeoMiner:
+Use `--cot workflow` to invoke GeoMiner:
 ```bash
 python experiment dataset/result.csv \
     --geominer_detector_model llama4-scout \
