@@ -260,6 +260,10 @@ python experiment.py dataset/result.csv \
     --random-sample 100
 ```
 
+
+### Evaluation
+Check the code in code/data_analysis.ipynb and select the evaluation metric.
+
 ### Output Files
 
 Results are automatically saved to timestamped files in the `results/` directory:
