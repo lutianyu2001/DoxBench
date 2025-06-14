@@ -58,6 +58,7 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
 - [Installation](#installation)
 - [Main Experiment](#main-experiment)
 - [ClueMiner](#clueminer)
+- [Evaluation](#evaluation)
 - [License](#license)
 - [Citation](#citation)
 
@@ -261,9 +262,6 @@ python experiment.py dataset/result.csv \
 ```
 
 
-### Evaluation
-Check the code in code/data_analysis.ipynb and select the evaluation metric.
-
 ### Output Files
 
 Results are automatically saved to timestamped files in the `results/` directory:
@@ -319,6 +317,11 @@ output/
 │       ├── phase1-input-round1-id_1-imageid_243.json
 │       └── ...
 ```
+
+
+## Evaluation
+Check the code in code/data_analysis.ipynb and select the evaluation metric.
+
 
 ## License
 
