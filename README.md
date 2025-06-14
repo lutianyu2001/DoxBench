@@ -320,7 +320,7 @@ output/
 
 
 ## Evaluation
-Check the code in code/data_analysis.ipynb and select the evaluation metric.
+Check the code in code/data_analysis.ipynb, select and deploy the evaluation metric in your code.
 
 
 ## License
