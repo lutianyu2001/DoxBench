@@ -326,9 +326,9 @@ output/
 If you use DoxBench in your research, please cite our paper:
 
 ```bibtex
-@misc{luo2025doxinglensrevealingprivacy,
-      title={Doxing via the Lens: Revealing Privacy Leakage in Image Geolocation for Agentic Multi-Modal Large Reasoning Model}, 
-      author={Weidi Luo and Qiming Zhang and Tianyu Lu and Xiaogeng Liu and Yue Zhao and Zhen Xiang and Chaowei Xiao},
+@misc{luo2025doxinglensrevealinglocationrelated,
+      title={Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models}, 
+      author={Weidi Luo and Tianyu Lu and Qiming Zhang and Xiaogeng Liu and Bin Hu and Yue Zhao and Jieyu Zhao and Song Gao and Patrick McDaniel and Zhen Xiang and Chaowei Xiao},
       year={2025},
       eprint={2504.19373},
       archivePrefix={arXiv},
