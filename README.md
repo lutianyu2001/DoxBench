@@ -276,6 +276,17 @@ Results are automatically saved to timestamped files in the `results/` directory
 - **Process Data**: `api_call_time`, `clue_list`, `address_list`, `answer`, `prompt`
 - **Advanced**: `reasoning_process`, `extract_and_analyze` (if reasoning enabled)
 
+## GeoMiner
+
+```bash
+python experiment dataset/result.csv \
+    --geominer_detector_model llama4-scout \
+    --model llama4-scout \
+    --top1 \
+    --cot workflow \
+    --parallel 4
+```
+
 ## ClueMiner
 
 The `clueminer.py` tool provides an advanced LLM-powered framework for building privacy clue taxonomies.
