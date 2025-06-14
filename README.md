@@ -343,5 +343,3 @@ If you use DoxBench in your research, please cite our paper:
       url={https://arxiv.org/abs/2504.19373}, 
 }
 ```
-
-For more detailed documentation and examples, please refer to our [paper](https://arxiv.org/abs/2504.19373) and [dataset](https://huggingface.co/datasets/tianyulu/DoxBench).
