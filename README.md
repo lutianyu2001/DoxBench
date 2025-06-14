@@ -58,6 +58,7 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
 - [Installation](#installation)
 - [Main Experiment](#main-experiment)
 - [ClueMiner](#clueminer)
+- [GeoMiner](#geominer)
 - [Evaluation](#evaluation)
 - [License](#license)
 - [Citation](#citation)
