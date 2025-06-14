@@ -278,7 +278,7 @@ Results are automatically saved to timestamped files in the `results/` directory
 - **Advanced**: `reasoning_process`, `extract_and_analyze` (if reasoning enabled)
 
 ## GeoMiner
-
+use --cot workflow to invoke GeoMiner:
 ```bash
 python experiment dataset/result.csv \
     --geominer_detector_model llama4-scout \
