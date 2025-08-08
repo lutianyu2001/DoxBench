@@ -5,7 +5,7 @@
 <h2 align="center"> <a>⛓‍💥 Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models</a></h2>
 
 <div align="center">
-  <a href="https://doxbench.github.io/" target="_blank">
+  <a href="http://doxbench.github.io" target="_blank">
     <img src="https://img.shields.io/badge/🚀%20LAUNCH%20PROJECT%20PAGE-Doxing%20via%20the%20Lens-8b5cf6?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjZmZmZmZmIi8+Cjwvc3ZnPgo=&logoColor=white&labelColor=4c1d95&color=8b5cf6" alt="Launch Project Page" />
   </a>
   <br/>
@@ -37,8 +37,14 @@
   <img src="https://img.shields.io/badge/Last%20Updated-June%202025-brightgreen?style=flat-square">
 </p>
 
-## 💡 Abstract
+## 📰 News
+| Date           | Event    |
+|----------------|----------|
+| **2025/08/07** | 🎁 We have released our complete dataset on HuggingFace!|
+| **2025/06/09** | 🛠️ We have posted our v3 paper on arXiv, with our source code and partial dataset (L1 and mirror) released on GitHub and HuggingFace.|
+| **2025/04/29** | 💡 We have posted our v2 paper on arXiv.|
 
+## Abstract
 Recent advances in multi-modal large reasoning models (MLRMs) have shown significant ability to interpret complex visual content. While these models enable impressive reasoning capabilities, they also introduce novel and underexplored privacy risks. In this paper, we identify a novel category of privacy leakage in MLRMs: Adversaries can infer sensitive geolocation information, such as a user's home address or neighborhood, from user-generated images, including selfies captured in private settings. To formalize and evaluate these risks, we propose a three-level visual privacy risk framework that categorizes image content based on contextual sensitivity and potential for location inference. We further introduce DoxBench, a curated dataset of 500 real-world images reflecting diverse privacy scenarios. Our evaluation across 11 advanced MLRMs and MLLMs demonstrates that these models consistently outperform non-expert humans in geolocation inference and can effectively leak location-related private information. This significantly lowers the barrier for adversaries to obtain users' sensitive geolocation information. We further analyze and identify two primary factors contributing to this vulnerability: (1) MLRMs exhibit strong reasoning capabilities by leveraging visual clues in combination with their internal world knowledge; and (2) MLRMs frequently rely on privacy-related visual clues for inference without any built-in mechanisms to suppress or avoid such usage. To better understand and demonstrate real-world attack feasibility, we propose GeoMiner, a collaborative attack framework that decomposes the prediction process into two stages: clue extraction and reasoning to improve geolocation performance while introducing a novel attack perspective. Our findings highlight the urgent need to reassess inference-time privacy risks in MLRMs to better protect users' sensitive information.
 
 <p align="center">
@@ -76,19 +82,9 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
 
 ## Dataset
 
-### Data Instances
-
-The dataset is organized as follows:
-- **Image Folders**: Separate folders containing privacy-sanitized images (EXIF removed from image files)
-- **EXIF Metadata**: Comprehensive metadata in `exif.csv` including GPS coordinates and camera settings
-- **Ground Truth Labels**: Location information in `result.csv` with Google Geocoding API-derived addresses
+For compliance purposes, only partial dataset (L1 and mirror) is available on GitHub. The full dataset is available on [HuggingFace](https://huggingface.co/datasets/DoxxingTeam/DoxBench).
 
 ### Data Fields
-
-#### Image Files
-- High-resolution photographs (EXIF metadata stripped for privacy)
-- Organized in folders by privacy level (L1, Mirror)
-- Original filename preserved for cross-referencing
 
 #### exif.csv
 Contains comprehensive EXIF metadata for all images including:
@@ -111,10 +107,10 @@ Ground truth geolocation data:
 ### Data Splits
 
 Currently available categories:
-- **Level 1 (L1)**: in `benign_people` folder, ~126 images (25.2% of total dataset) - Personal imagery in public settings
-- **Mirror**: in `mirror` folder, ~46 images (9.2% of total dataset) - Location inference through reflective surfaces
-
-**Note**: Level 2 and Level 3 image folders will be released in future versions following additional ethics review.
+- **Level 1 (L1)**: in `benign_people` folder, ~128 images (25.2% of total dataset) - Personal imagery in public space
+- **Level 2 (L2)**: in `privacy/privacy_no_people` folder, ~187 images (37.2% of total dataset) - Private space without person
+- **Level 3 (L3)**: in `privacy/privacy_people` folder, ~140 images (28.4% of total dataset) - Personal imagery in private space
+- **Mirror**: in `mirror` folder, ~45 images (9.2% of total dataset) - Location inference through reflective surfaces
 
 <p align="center">
     <img src="./misc/dataset_sunburst.png" width="300"/>
