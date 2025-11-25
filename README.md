@@ -16,7 +16,7 @@
 
 <h5 align="center">
 
-[Weidi Luo*](https://eddyluo1232.github.io/), [Tianyu Lu*](https://scholar.google.com/citations?user=kkiCj18AAAAJ&hl=en), [Qiming Zhang*](https://scholar.google.com/citations?user=hgu_aPwAAAAJ&hl=en), [Xiaogeng Liu](https://xiaogeng-liu.com/), [Bin Hu](https://bin-hu.com/)
+[Weidi Luo*](https://eddyluo1232.github.io/), [Tianyu Lu*](https://scholar.google.com/citations?user=kkiCj18AAAAJ), [Qiming Zhang*](https://scholar.google.com/citations?user=hgu_aPwAAAAJ&hl=en), [Xiaogeng Liu](https://xiaogeng-liu.com/), [Bin Hu](https://bin-hu.com/)
 
 [Yue Zhao](https://viterbi-web.usc.edu/~yzhao010/), [Jieyu Zhao](https://jyzhao.net/), [Song Gao](https://geography.wisc.edu/staff/gao-song/), [Patrick McDaniel](https://patrickmcdaniel.org/), [Zhen Xiang](https://zhenxianglance.github.io/), [Chaowei Xiao](https://xiaocw11.github.io/)
 
@@ -24,7 +24,7 @@
   <a href="https://arxiv.org/abs/2504.19373">
   <img src="https://img.shields.io/badge/ArXiv-2504.19373-b31b1b.svg?style=flat-square&logo=arxiv" alt="arXiv">
 </a>
-  <a href="https://huggingface.co/datasets/DoxxingTeam/DoxBench">
+  <a href="https://huggingface.co/datasets/MomoUchi/DoxBenchh">
   <img src="https://img.shields.io/badge/HuggingFace-Dataset-yellow.svg?style=flat-square&logo=huggingface" alt="Hugging Face">
 </a>
 
@@ -40,6 +40,7 @@
 ## 📰 News
 | Date           | Event    |
 |----------------|----------|
+| **2025/10/20** | 🎤 **Oral presentation** at [ICCV 2025 T2FM Workshop](https://web.archive.org/web/20251125025544/https://t2fm-ws.github.io/T2FM-ICCV25/) **(Top 17%)**! [\[Video\]](https://youtu.be/N3umtbOkn8k)|
 | **2025/08/07** | 🎁 We have released our complete dataset on HuggingFace!|
 | **2025/06/09** | 🛠️ We have posted our v3 paper on arXiv, with our source code and partial dataset (L1 and mirror) released on GitHub and HuggingFace.|
 | **2025/04/29** | 💡 We have posted our v2 paper on arXiv.|
@@ -82,7 +83,7 @@ Recent advances in multi-modal large reasoning models (MLRMs) have shown signifi
 
 ## Dataset
 
-For compliance purposes, only partial dataset (L1 and mirror) is available on GitHub. The full dataset is available on [HuggingFace](https://huggingface.co/datasets/DoxxingTeam/DoxBench).
+For compliance purposes, only partial dataset (L1 and mirror) is available on GitHub. The full dataset is available on [HuggingFace](https://huggingface.co/datasets/MomoUchi/DoxBench).
 
 ### Data Fields
 
@@ -326,7 +327,7 @@ Check the code in code/data_analysis.ipynb, select and deploy the evaluation met
 ## License
 
 - **Code**: This project's code is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file
-- **Dataset**: The datasets are licensed under Creative Commons Attribution NonCommercial NoDerivatives 4.0 International - see [LICENSE-DATA](dataset/LICENSE-DATA)
+- **Dataset**: The datasets are licensed under Momoka Scientific Strict License 1.0 - see the [deed](https://lic.lu.fm/sci-strict-deed)
 
 ## Citation
 
